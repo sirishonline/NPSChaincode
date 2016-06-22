@@ -105,6 +105,8 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 	// Handle different functions
 	if function == "init" {													//initialize the chaincode state, used as reset
 		return t.Init(stub, "init", args)
+	} else if function == "read" {											//writes a value to the chaincode state
+		return t.Read(stub, args)
 	} else if function == "write" {											//writes a value to the chaincode state
 		return t.Write(stub, args)
 	} else if function == "init_marble" {									//create a new marble
@@ -133,7 +135,7 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 // ============================================================================================================================
 // Read - read a variable from chaincode state
 // ============================================================================================================================
-func (t *SimpleChaincode) read(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) Read(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var Id, jsonResp string
 	var err error
 
