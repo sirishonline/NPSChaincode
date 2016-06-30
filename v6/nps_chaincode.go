@@ -41,7 +41,7 @@ type Survey struct{
 	Key string `json:"key"`					//the fieldtags are needed to keep case from bouncing around
 	Survey string `json:"survey"`
 	Customer string `json:"customer"`
-        Score int `json:"score"`
+        Score string `json:"score"`
         Feedback string `json:"feedback"`        
         SubmittedDate string `json:"submitteddate"`
 }
@@ -260,7 +260,7 @@ func (t *SimpleChaincode) init_survey(stub *shim.ChaincodeStub, args []string) (
 	key := args[0]
 	survey := strings.ToLower(args[1])
 	customer := strings.ToLower(args[2])
-	score, err := strconv.Atoi(args[3])
+	score, err := strconv.ToLower(args[3])
         feedback := strings.ToLower(args[4])
         submitteddate := strings.ToLower(args[5])
 
@@ -282,7 +282,7 @@ func (t *SimpleChaincode) init_survey(stub *shim.ChaincodeStub, args []string) (
 	}
 	
 	//build the survey json string manually
-	str := `{"key": "` + key + `", "survey": "` + survey + `", "customer": "` + customer + `", "score": ` + strconv.Itoa(score) + `, "feedback": "` + feedback + `", "submitteddate": "` + submitteddate + `"}`
+	str := `{"key": "` + key + `", "survey": "` + survey + `", "customer": "` + customer + `", "score": ` + score + `, "feedback": "` + feedback + `", "submitteddate": "` + submitteddate + `"}`
 	err = stub.PutState(key, []byte(str))									//store survey with id as key
 	if err != nil {
 		return nil, err
