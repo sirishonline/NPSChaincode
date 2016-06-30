@@ -41,7 +41,7 @@ type Survey struct{
 	Key string `json:"key"`					//the fieldtags are needed to keep case from bouncing around
 	Survey string `json:"survey"`
 	Customer string `json:"customer"`
-        Score string `json:"score"`
+        Score int `json:"score"`
         Feedback string `json:"feedback"`        
         SubmittedDate string `json:"submitteddate"`
 }
