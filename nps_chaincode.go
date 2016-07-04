@@ -39,6 +39,10 @@ var marbleIndexStr = "_marbleindex"				//name for the key/value that will store 
 type Marble struct{
 	Name string `json:"name"`					//the fieldtags are needed to keep case from bouncing around
 	Survey string `json:"survey"`
+        Customer string `json:"customer"`
+        Score string `json:"score"`
+        Feedback string `json:"feedback"`
+        Submitteddate string `json:"submitteddate"`
 }
 
 // ============================================================================================================================
@@ -210,20 +214,18 @@ func (t *SimpleChaincode) init_marble(stub *shim.ChaincodeStub, args []string) (
 
 	//   0       1       2     3
 	// "asdf", "blue", "35", "bob"
-	if len(args) != 4 {
+	if len(args) != 6 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 4")
 	}
 
 	fmt.Println("- start init marble")
-	if len(args[0]) <= 0 {
-		return nil, errors.New("1st argument must be a non-empty string")
-	}
-	if len(args[1]) <= 0 {
-		return nil, errors.New("2nd argument must be a non-empty string")
-	}
 	survey := strings.ToLower(args[1])
+        customer := strings.ToLower(args[1])
+        score := strings.ToLower(args[1])
+        feedback := strings.ToLower(args[1])
+        submitteddate := strings.ToLower(args[1])
 	
-	str := `{"name": "` + args[0] + `", "survey": "` + survey + `"}`
+	str := `{"name": "` + args[0] + `", "survey": "` + survey + `", "customer": "` + customer + `", "score": "` + score + `", "feedback": "` + feedback + `", "submitteddate": "` + submitteddate + `"}`
 	err = stub.PutState(args[0], []byte(str))								//store marble with id as key
 	if err != nil {
 		return nil, err
